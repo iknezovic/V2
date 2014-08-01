@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="541.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guipart.view.GUIOverviewController">
+   <children>
+      <SplitPane dividerPositions="0.42258883248730966" layoutX="2.0" layoutY="3.0" prefHeight="541.0" prefWidth="692.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="242.0">
+               <children>
+                  <TableView fx:id="personTable" layoutX="9.0" layoutY="52.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="id" prefWidth="49.0" text="ID" />
+                      <TableColumn fx:id="balance" prefWidth="88.0" text="Balance" />
+                        <TableColumn fx:id="creditLine" prefWidth="107.0" text="Credit line" />
+                        <TableColumn fx:id="fraud" prefWidth="82.0" text="Fraud risk" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="539.0" prefWidth="421.0">
+               <children>
+                  <TabPane prefHeight="525.0" prefWidth="398.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Logistic regression">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane layoutX="12.0" layoutY="30.0" prefHeight="120.0" prefWidth="238.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="139.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="99.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Gender:" />
+                                          <Label text="Transactions:" GridPane.rowIndex="1" />
+                                          <Label text="International trans.:" GridPane.rowIndex="2" />
+                                          <Label text="Cardholder:" GridPane.rowIndex="3" />
+                                          <Label fx:id="gender" prefHeight="15.0" prefWidth="101.0" text="Label" GridPane.columnIndex="1" />
+                                          <Label fx:id="transaction" prefHeight="15.0" prefWidth="97.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label fx:id="intlTransaction" prefHeight="15.0" prefWidth="103.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="cardholders" prefHeight="15.0" prefWidth="98.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                    <Label layoutX="12.0" layoutY="14.0" text="Details:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Button layoutX="266.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleClassifyModel" text="Classify" />
+                                    <Button fx:id="openButton" layoutX="146.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleOpenFile" text="Open file" />
+                                    <TextField fx:id="textFieldCSV" editable="false" layoutX="34.0" layoutY="356.0" prefHeight="25.0" prefWidth="301.0" promptText="None file selected" />
+                                    <Button layoutX="34.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleOpenModel" text="Select model" />
+                                    <TextField fx:id="textFieldModel" layoutX="34.0" layoutY="388.0" prefHeight="25.0" prefWidth="301.0" promptText="None model selected" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Random forest">
+                        <content>
+                          <AnchorPane  minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane layoutX="13.0" layoutY="19.0" prefHeight="120.0" prefWidth="238.0">
+                                       <children>
+                                          <Label text="Gender:" />
+                                          <Label text="Transactions:" GridPane.rowIndex="1" />
+                                          <Label text="International trans.:" GridPane.rowIndex="2" />
+                                          <Label text="Cardholder:" GridPane.rowIndex="3" />
+                                          <Label fx:id="gender1" prefHeight="15.0" prefWidth="101.0" text="Label" GridPane.columnIndex="1" />
+                                          <Label fx:id="transaction1" prefHeight="15.0" prefWidth="97.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label fx:id="intlTransaction1" prefHeight="15.0" prefWidth="103.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="cardholders1" prefHeight="15.0" prefWidth="98.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="139.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="99.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                    <Button layoutX="291.0" layoutY="356.0" mnemonicParsing="false" onAction="#handelOpenFileRF" prefHeight="25.0" prefWidth="92.0" text="Input file" />
+                                    <Button layoutX="291.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleOpenModelRF" prefHeight="25.0" prefWidth="94.0" text="Model file" />
+                                    <Button layoutX="289.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleOpenDatasetRF" prefHeight="25.0" prefWidth="96.0" text="Dataset file" />
+                                    <TextField fx:id="textFieldCSVRF" layoutX="29.0" layoutY="356.0" prefHeight="25.0" prefWidth="249.0" promptText="None input file selected" />
+                                    <TextField fx:id="textFieldModelRF" layoutX="28.0" layoutY="389.0" prefHeight="25.0" prefWidth="249.0" promptText="None model file selected" />
+                                    <TextField fx:id="textFieldDatasetRF" layoutX="27.0" layoutY="422.0" prefHeight="25.0" prefWidth="249.0" promptText="None dataset file selected" />
+                                    <Button layoutX="29.0" layoutY="453.0" mnemonicParsing="false" onAction="#handleClassifyRF" prefHeight="25.0" prefWidth="251.0" text="Classify" />
+                                    <TextField fx:id="textAnalyze" layoutX="15.0" layoutY="144.0" prefHeight="199.0" prefWidth="366.0" />
+                                 </children></AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
