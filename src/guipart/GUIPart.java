@@ -123,6 +123,11 @@ public class GUIPart extends Application {
         return this;
     }
     
+    public String getPerson()
+    {
+       return this.personData.toString();
+    }
+    
    
     
 }

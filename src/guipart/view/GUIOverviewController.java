@@ -87,7 +87,7 @@ public class GUIOverviewController {
     @FXML private TextField textFieldModelRF;
     @FXML private TextField textFieldDatasetRF;
     
-    @FXML private TextField textAnalyze;
+    @FXML private TextArea textAnalyze;
     
     /****************************************************************
      * path to csv file and model
