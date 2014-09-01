@@ -7,30 +7,23 @@
 package guipart.view;
 
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
 import guipart.GUIPart;
 import guipart.model.Person;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.classifier.ClassifierResult;
@@ -40,7 +33,6 @@ import org.apache.mahout.classifier.df.DFUtils;
 import org.apache.mahout.classifier.df.DecisionForest;
 import org.apache.mahout.classifier.df.data.DataConverter;
 import org.apache.mahout.classifier.df.data.Dataset;
-import org.apache.mahout.classifier.df.data.Instance;
 import org.apache.mahout.classifier.evaluation.Auc;
 import org.apache.mahout.classifier.sgd.CsvRecordFactory;
 import org.apache.mahout.classifier.sgd.LogisticModelParameters;
@@ -78,7 +70,9 @@ public class GUIOverviewController {
     @FXML private Label transaction1;
     @FXML private Label intlTransaction1;
     @FXML private Label cardholders1;
-    
+    /*****************************************************************
+     * Input fields
+     *****************************************************************/
    
     @FXML private TextField textFieldCSV;
     @FXML private TextField textFieldModel;
@@ -87,7 +81,9 @@ public class GUIOverviewController {
     @FXML private TextField textFieldModelRF;
     @FXML private TextField textFieldDatasetRF;
     
+    //output fields
     @FXML private TextArea textAnalyze;
+    @FXML private TextArea textAnalyze2;
     
     /****************************************************************
      * path to csv file and model
@@ -260,6 +256,8 @@ public class GUIOverviewController {
             System.out.println("Confusion:"+m.get(0, 0)+" "+m.get(1, 0)+"\n \t   "+m.get(0, 1)+" "+m.get(1, 1)+" ");
     //        m = collector.entropy();
             //output.printf(Locale.ENGLISH, "entropy: [[%.1f, %.1f], [%.1f, %.1f]]%n",m.get(0, 0), m.get(1, 0), m.get(0, 1), m.get(1, 1));
+            textAnalyze2.setText("Confusion:"+m.get(0, 0)+" "+m.get(1, 0)+"\n \t \t   "+m.get(0, 1)+" "+m.get(1, 1)+"\n"+
+                                "Total: "+(correct+wrong)+" Correct: "+correct+" Wrong: "+wrong+" Wrong pct: "+posto +"%");
         }else{
             
             
@@ -277,40 +275,34 @@ public class GUIOverviewController {
     
     @FXML void handleClassifyRF(ActionEvent event) throws IOException{
         
-        String outputFile = "data/out";/*
-        String inputFile = "data/DataFraud1MTest.csv";
-        String modelFile = "data/forest.seq";
-        String infoFile = "data/DataFraud1M.info";*/
+        String outputFile = "data/out";
         
-        Path dataPath = new Path(textFieldCSVRF.getText()); // test data path
-        Path datasetPath = new Path(textFieldDatasetRF.getText());
-        Path modelPath = new Path(textFieldModelRF.getText()); // path where the forest is stored
-        Path outputPath = new Path(outputFile); // path to predictions file, if null do not output the predictions
-        
+        Path dataPath = new Path(textFieldCSVRF.getText());         // test data path
+        Path datasetPath = new Path(textFieldDatasetRF.getText());  //info file about data set
+        Path modelPath = new Path(textFieldModelRF.getText());      // path where the forest is stored
+        Path outputPath = new Path(outputFile);                     // path to predictions file, if null do not output the predictions
+
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        
+
         FileSystem outFS = FileSystem.get(conf);
-      
-        
-        //log.info("Loading the forest...");
+
+
         System.out.println("Loading the forest");
         DecisionForest forest = DecisionForest.load(conf, modelPath);
 
         if (forest == null) 
             System.err.println("No decision forest found!");
-            //log.error("No Decision Forest found!");
-                
+            
          // load the dataset
         Dataset dataset = Dataset.load(conf, datasetPath);
         DataConverter converter = new DataConverter(dataset);
-         
-        //log.info("Sequential classification...");
+
         System.out.println("Sequential classification");
         long time = System.currentTimeMillis();
 
         Random rng = RandomUtils.getRandom();
-        
+
         List<double[]> resList = Lists.newArrayList();
         if (fs.getFileStatus(dataPath).isDir()) {
          //the input is a directory of files
@@ -319,20 +311,20 @@ public class GUIOverviewController {
         // the input is one single file
          Utils.rfTestFile(dataPath, outputPath, converter, forest, dataset, resList, rng, outFS ,fs,guiPart);
         }
-        
+
         time = System.currentTimeMillis() - time;
         //log.info("Classification Time: {}", DFUtils.elapsedTime(time));
         System.out.println("Classification time: "+DFUtils.elapsedTime(time));
-    
+
         if (dataset.isNumerical(dataset.getLabelId())) {
-            
+
             RegressionResultAnalyzer regressionAnalyzer = new RegressionResultAnalyzer();
             double[][] results = new double[resList.size()][2];
             regressionAnalyzer.setInstances(resList.toArray(results));
             //log.info("{}", regressionAnalyzer);
             System.out.println(regressionAnalyzer.toString());
-            
-            
+
+
         } else {
             ResultAnalyzer analyzer = new ResultAnalyzer(Arrays.asList(dataset.labels()), "unknown");
             for (double[] r : resList) {
@@ -343,7 +335,7 @@ public class GUIOverviewController {
             System.out.println(analyzer.toString());
             textAnalyze.setText(analyzer.toString());
         }   
-    
+
     }
     
     @FXML void handelOpenFileRF(ActionEvent event){
@@ -383,6 +375,5 @@ public class GUIOverviewController {
         }
     }
     
-       
- 
+    
 }

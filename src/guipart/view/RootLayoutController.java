@@ -12,13 +12,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ListIterator;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
+import org.controlsfx.dialog.Dialogs;
 
 
 /**
@@ -59,22 +58,50 @@ public class RootLayoutController {
               
               BufferedWriter bw = new BufferedWriter(new FileWriter(file));
               ListIterator<Person> listIterator = this.guiPart.getPersonData().listIterator();
-              String s,full;
+              String s;
               
-              if(file != null){
-                  
+              
+              if(file != null && listIterator.hasNext()){
+                  String header = "ID Gender Cardhodlers Balance Transactions IntlTrans CreditLine Fraud \n";
+                  bw.write(header);
                   Person onePerson = listIterator.next();
+                  
                   while(listIterator.hasNext()){
-                      s=onePerson.getID().toString();
+                      s = onePerson.getID().toString();
                       s = s.concat(",");
+                      
+                      s = s.concat(onePerson.getGender());
+                      s = s.concat(",");
+                      
+                      s = s.concat(onePerson.getCardholders());
+                      s = s.concat(",");
+                      
                       s = s.concat(onePerson.getBalance().toString());
                       s = s.concat(",");
+                      
+                      s = s.concat(onePerson.getTransactions());
+                      s = s.concat(",");
+                       
+                      s = s.concat(onePerson.getIntlTransactions());
+                      s = s.concat(",");
+                      
+                      s = s.concat(onePerson.getCreditLine().toString());
+                      s = s.concat(",");
+                      
                       s = s.concat(onePerson.getFraud().toString());
                       s = s.concat("\n");
                       
                       bw.write(s);
                       onePerson = listIterator.next();
                   }
+                  
+              }else{
+                  Dialogs.create()
+                    .owner(guiPart.getPrimaryStage())
+                    .title("Error Dialog")
+                    .masthead("Look, an Error Dialog")
+                    .message("Classify table is empty or file name wasn't given")
+                    .showError();
               }
     }
     
@@ -88,6 +115,21 @@ public class RootLayoutController {
         } catch (IOException ex) {
             //Logger.getLogger(JavaFX_Text.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
     }
+     
+     @FXML
+     private void about(Event e){
+         Dialogs.create()
+                    .owner(guiPart.getPrimaryStage())
+                    .title("About")
+                    .masthead("Super program 3300 delux")
+                    .message("Created by Ivan")
+                    .showInformation();
+     }
+     
+     @FXML
+     private void deleteRow(Event e){
+         
+         
+     }
 }

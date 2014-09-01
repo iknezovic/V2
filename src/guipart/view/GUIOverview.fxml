@@ -63,6 +63,7 @@
                                     <TextField fx:id="textFieldCSV" editable="false" layoutX="34.0" layoutY="356.0" prefHeight="25.0" prefWidth="301.0" promptText="None file selected" />
                                     <Button layoutX="34.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleOpenModel" text="Select model" />
                                     <TextField fx:id="textFieldModel" layoutX="34.0" layoutY="388.0" prefHeight="25.0" prefWidth="301.0" promptText="None model selected" />
+                                    <TextArea fx:id="textAnalyze2" layoutX="14.0" layoutY="150.0" prefHeight="200.0" prefWidth="358.0" promptText="Test result" />
                                  </children>
                               </AnchorPane>
                         </content>
