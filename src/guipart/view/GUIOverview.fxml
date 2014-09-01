@@ -78,10 +78,10 @@
                                           <Label text="Transactions:" GridPane.rowIndex="1" />
                                           <Label text="International trans.:" GridPane.rowIndex="2" />
                                           <Label text="Cardholder:" GridPane.rowIndex="3" />
-                                          <Label fx:id="gender1" prefHeight="15.0" prefWidth="101.0" text="Label" GridPane.columnIndex="1" />
-                                          <Label fx:id="transaction1" prefHeight="15.0" prefWidth="97.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label fx:id="intlTransaction1" prefHeight="15.0" prefWidth="103.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label fx:id="cardholders1" prefHeight="15.0" prefWidth="98.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label fx:id="gender1" prefHeight="15.0" prefWidth="101.0" GridPane.columnIndex="1" />
+                                          <Label fx:id="transaction1" prefHeight="15.0" prefWidth="97.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label fx:id="intlTransaction1" prefHeight="15.0" prefWidth="103.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="cardholders1" prefHeight="15.0" prefWidth="98.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="139.0" />
@@ -100,11 +100,55 @@
                                     <TextField fx:id="textFieldCSVRF" layoutX="17.0" layoutY="356.0" prefHeight="25.0" prefWidth="261.0" promptText="None input file selected" />
                                     <TextField fx:id="textFieldModelRF" layoutX="18.0" layoutY="389.0" prefHeight="25.0" prefWidth="259.0" promptText="None model file selected" />
                                     <TextField fx:id="textFieldDatasetRF" layoutX="17.0" layoutY="422.0" prefHeight="25.0" prefWidth="259.0" promptText="None dataset file selected" />
-                                    <Button layoutX="29.0" layoutY="453.0" mnemonicParsing="false" onAction="#handleClassifyRF" prefHeight="25.0" prefWidth="251.0" text="Classify" />
+                                    <Button layoutX="17.0" layoutY="453.0" mnemonicParsing="false" onAction="#handleClassifyRF" prefHeight="25.0" prefWidth="260.0" text="Classify" />
                                     <TextArea fx:id="textAnalyze" layoutX="14.0" layoutY="139.0" prefHeight="200.0" prefWidth="365.0" promptText="Test result" wrapText="true" />
                                  </children></AnchorPane>
                         </content>
                       </Tab>
+                        <Tab text="Single Classify">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane layoutX="33.0" layoutY="16.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="111.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="89.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="ID" />
+                                          <Label text="Gender" GridPane.rowIndex="1" />
+                                          <Label text="State" GridPane.rowIndex="2" />
+                                          <Label text="Cardholders" GridPane.rowIndex="3" />
+                                          <Label text="Balance" GridPane.rowIndex="4" />
+                                          <Label text="Transactions" GridPane.rowIndex="5" />
+                                          <Label text="Intl Transactions" GridPane.rowIndex="6" />
+                                          <Label text="Credit Line" GridPane.rowIndex="7" />
+                                          <TextField fx:id="scID" GridPane.columnIndex="1" />
+                                          <TextField fx:id="scGender" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="scState" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="scCardholders" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="scBalance" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="scTrans" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="scIntlTrans" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="scCreditLine" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                       </children>
+                                    </GridPane>
+                                    <Button layoutX="45.0" layoutY="304.0" mnemonicParsing="false" onAction="#singlClassify" text="Classify" />
+                                    <Button layoutX="156.0" layoutY="304.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Clear" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                </children></AnchorPane>

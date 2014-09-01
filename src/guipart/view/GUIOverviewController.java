@@ -22,7 +22,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.transform.ScaleBuilder;
 import javafx.stage.FileChooser;
+import net.sf.cglib.transform.AbstractClassFilterTransformer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -71,7 +73,7 @@ public class GUIOverviewController {
     @FXML private Label intlTransaction1;
     @FXML private Label cardholders1;
     /*****************************************************************
-     * Input fields
+     * Input fields forest and log.reg.
      *****************************************************************/
    
     @FXML private TextField textFieldCSV;
@@ -80,7 +82,18 @@ public class GUIOverviewController {
     @FXML private TextField textFieldCSVRF;
     @FXML private TextField textFieldModelRF;
     @FXML private TextField textFieldDatasetRF;
-    
+    /*************************************************************
+     *  Input fields single classify
+     ***********************************************************/
+    @FXML private TextField scID;
+    @FXML private TextField scGender;
+    @FXML private TextField scState;
+    @FXML private TextField scBalance;       
+    @FXML private TextField scTrans;
+    @FXML private TextField scIntlTrans;
+    @FXML private TextField scCreditLine;
+    @FXML private TextField scCardholders;
+            
     //output fields
     @FXML private TextArea textAnalyze;
     @FXML private TextArea textAnalyze2;
@@ -197,10 +210,10 @@ public class GUIOverviewController {
 
             BufferedReader in = Utils.open(pathCSV);
 
-
             String line = in.readLine();
             csv.firstLine(line);
             line = in.readLine();
+            
             int correct = 0;
             int wrong = 0;
             Boolean booltemp;
@@ -211,19 +224,7 @@ public class GUIOverviewController {
                 Vector v = new SequentialAccessSparseVector(lmp.getNumFeatures());
                 int target = csv.processLine(line, v);
                 String [] split = line.split(",");
-                
-                /*for (String split1 : split) {
-                    System.out.println(split1);
-                }
-                Integer a = Integer.parseInt(split[0]);
-                System.out.println("AAAAA je:"+a);
-                
-                Person temp = new Person(Integer.parseInt(split[0]),Integer.parseInt(split[4]),Integer.parseInt(split[7]),Boolean.parseBoolean(split[8]), 
-                        split[1],Integer.parseInt(split[5]),Integer.parseInt(split[6]),Integer.parseInt(split[2]));
-                
-                guiPart.addPerson(temp);*/
-
-
+               
                 double score = lr.classifyFull(v).maxValueIndex();
                 if(score == target)
                    correct++;
@@ -233,6 +234,7 @@ public class GUIOverviewController {
                 System.out.println("Target is: "+target+" Score: "+score);
                 
                 booltemp = score != 0;
+               
                 if(split[1].contentEquals("1"))
                     gender = "male";
                 else    
@@ -375,5 +377,45 @@ public class GUIOverviewController {
         }
     }
     
+    @FXML void singlClassify(ActionEvent e) throws IOException{
+      
+            
+            LogisticModelParameters lmp = LogisticModelParameters.loadFrom(new File(pathModel));
+
+            CsvRecordFactory csv = lmp.getCsvRecordFactory();
+            OnlineLogisticRegression lr = lmp.createRegression();
+            csv.firstLine("custID,gender,state,cardholder,balance,numTrans,numIntlTrans,creditLine,fraudRisk");
+            
+            String line;
+            
+            line = scID.getText();
+            line = line.concat(","+scGender.getText());
+            line = line.concat(","+scState.getText());
+            line = line.concat(","+scCardholders.getText());
+            line = line.concat(","+scBalance.getText());
+            line = line.concat(","+scTrans.getText());
+            line = line.concat(","+scIntlTrans.getText());
+            line = line.concat(","+scCreditLine.getText());
+            line = line.concat(",0 \n");
+            
+            Vector v = new SequentialAccessSparseVector(lmp.getNumFeatures());
+                int target = csv.processLine(line, v);
+                String [] split = line.split(",");
+               
+                double score = lr.classifyFull(v).maxValueIndex();
+                boolean booltemp = score != 0;
+                
+                String gender;
+                
+                if(split[1].contentEquals("1"))
+                    gender = "male";
+                else    
+                    gender = "female";
+                
+                Person temp = new Person(Integer.parseInt(split[0]),Integer.parseInt(split[4]),Integer.parseInt(split[7]),booltemp, 
+                        gender,Integer.parseInt(split[5]),Integer.parseInt(split[6]),Integer.parseInt(split[3]));
+                
+                guiPart.addPerson(temp);
+    }
     
 }
