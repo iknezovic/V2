@@ -269,8 +269,6 @@ public class GUIOverviewController {
         .masthead("Look, an Error Dialog")
         .message("One or more files aren't selected")
         .showError();
-            
-            
         
         }   
     }
@@ -416,6 +414,18 @@ public class GUIOverviewController {
                         gender,Integer.parseInt(split[5]),Integer.parseInt(split[6]),Integer.parseInt(split[3]));
                 
                 guiPart.addPerson(temp);
+    }
+    
+    @FXML void clearTextFields (ActionEvent e){
+        scID.clear();
+        scBalance.clear();
+        scCardholders.clear();
+        scCreditLine.clear();
+        scGender.clear();
+        scIntlTrans.clear();
+        scState.clear();
+        scTrans.clear();
+        
     }
     
 }
